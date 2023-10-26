@@ -1,6 +1,8 @@
 package com.example.login
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.login.databinding.ActivityMainBinding
@@ -11,35 +13,27 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val MainBinding = ActivityMainBinding.inflate(layoutInflater)
+        val bienvenidaBinding = BienvenidaBinding.inflate(layoutInflater)
+
         setContentView(MainBinding.root)
 
-
-        val acceder = MainBinding.acceder
+        val botonAcceder = MainBinding.accederBoton
 
         val usuario = MainBinding.usuario
 
-        val contrase = MainBinding.contra
+        val contraseña = MainBinding.contra
+
 
         //cuando clicke boton acceder
-        acceder.setOnClickListener {
-
-            if (usuario.text.toString() != "") {
-                //Accedemos a los elementos bienvenida
-                val bienvenidaBinding = BienvenidaBinding.inflate(layoutInflater)
+        botonAcceder.setOnClickListener(View.OnClickListener {
+            if(usuario.text.toString() == "britany" && contraseña.text.toString() == "ciruela"){
                 setContentView(bienvenidaBinding.root)
 
-                //Mostramos mensaje
-                bienvenidaBinding.saludo.text = "Nos alegramos de que vuelvas, $usuario"
 
-            } else {
-                val toast = Toast.makeText(
-                    applicationContext,
-                    "Debe introducir un nombre de usuario",
-                    Toast.LENGTH_SHORT
-                ).show()
+            }else{
+                Toast.makeText(this,"Contraseña o usuario incorrecto", Toast.LENGTH_SHORT).show()
             }
-        }
-
+        })
 
     }
 
