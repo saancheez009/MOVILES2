@@ -46,11 +46,11 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
             text = "Hello $name!",
             modifier = modifier
         )
-        AsyncImage(
+        /*AsyncImage(
             model="https://cdn.pixabay.com/photo/2018/04/26/12/14/travel-3351825_1280.jpg",
             contentDescription = "Mi buga",
             Modifier.size(400.dp,400.dp)
-        )
+        )*/
 
 
     }
