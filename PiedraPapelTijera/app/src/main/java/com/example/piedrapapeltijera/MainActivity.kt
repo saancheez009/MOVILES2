@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -29,6 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.piedrapapeltijera.ui.theme.PiedraPapelTijeraTheme
 
 class MainActivity : ComponentActivity() {
@@ -50,6 +52,8 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting( modifier: Modifier = Modifier) {
+    var puntosMaquina = 0
+    var puntosJugador = 0
     Column {
         Row{
             val imageModifier = Modifier
@@ -77,37 +81,34 @@ fun Greeting( modifier: Modifier = Modifier) {
             .size(200.dp)*/
 
         Row/*(modifier = rowModifier)*/{
-            val image1Modifier = Modifier
-                .size(150.dp)
-            val image2Modifier = Modifier
-                .size(150.dp)
+            val imageModifier = Modifier
+                    .size(132.dp)
             Column {
                 Image(
                     painter = painterResource (id =R.drawable.piedra),
                     contentDescription = "EleccionMaquina",
-                    modifier = image1Modifier
+                    modifier = imageModifier
                 )
             }
             Column {
-                val txtModifier = Modifier
-                    .size(150.dp)
-                Text(
-                    text = "VS",
-                    modifier = txtModifier
+                Image(
+                    painter = painterResource (id =R.drawable.vsimage),
+                    contentDescription = "EleccionMaquina",
+                    modifier = imageModifier
                 )
             }
             Column{
                 Image(
                     painter = painterResource (id =R.drawable.papel),
                     contentDescription = "EleccionUsuario",
-                    modifier = image2Modifier
+                    modifier = imageModifier
                 )
             }
         }
         //Spacer(Modifier.size(200.dp))
         Row{
             val imageModifier = Modifier
-                .size(70.dp)
+                .size(90.dp)
 
             Button(onClick = { }) {
                 Image(
@@ -137,6 +138,17 @@ fun Greeting( modifier: Modifier = Modifier) {
                Spacer(Modifier.size(ButtonDefaults.IconSpacing))
 
             }
+        }
+        Row (
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = modifier
+                .weight(1f)
+                .fillMaxWidth()
+        ){
+            Text(text = "Máquina $puntosMaquina - $puntosJugador Jugador",
+                fontSize = 30.sp
+            )
         }
     }
 }
