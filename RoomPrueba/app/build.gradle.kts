@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.example.roomprueba"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.roomprueba"
@@ -47,6 +47,6 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     implementation ("androidx.recyclerview:recyclerview:1.2.1")
-    implementation ("androidx.room:room-ktx:2.4.3")
-    kapt ("androidx.room:room-compiler:2.4.3")
+    implementation ("androidx.room:room-ktx:2.6.0")
+    kapt ("androidx.room:room-compiler:2.6.0")
 }
