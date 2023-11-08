@@ -1,6 +1,7 @@
 package com.example.piedrapapeltijera
 
-import  android.os.Bundle
+import android.annotation.SuppressLint
+import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -25,13 +26,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import kotlin.random.Random
-import androidx.compose.ui.platform.LocalContext
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.piedrapapeltijera.Home.HomeScreen
 import com.example.piedrapapeltijera.ui.theme.PiedraPapelTijeraTheme
-import androidx.compose.ui.tooling.preview.Preview
+import kotlin.random.Random
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +48,16 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    juego()
+                    val navController = rememberNavController()
+                    NavHost(navController = navController, startDestination = "Home"){
+                        composable(route="Home"){
+                            HomeScreen{
+                               // https://youtu.be/CWqELgz0xJI?feature=shared
+                                navController.navigate("detail")
+                        }
+                    }
+
+                    //juego()
 
                 }
             }
@@ -233,13 +247,28 @@ fun juego( modifier: Modifier = Modifier) {
                         )
                     }
         }
+        /*Row (
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = modifier
+                .weight(1f)
+                .fillMaxWidth()
+        ) {
+            HomeScreen{
+                val navController = rememberNavController()
+                navController.navigate("detail")
+
+            }
+        }*/
     }
+
 }
 //Números aleatorios para la elección de maquina
 fun random():Int{
     return Random.nextInt(1,4)
 }
 //Función que calcula el ganador de la partida
+@SuppressLint("SuspiciousIndentation")
 fun ganador(jugador:Int, maquina:Int):Int{
     var ganadorFinal = 0
 
