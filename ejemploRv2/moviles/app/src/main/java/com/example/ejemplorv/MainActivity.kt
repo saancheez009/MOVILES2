@@ -10,6 +10,10 @@ import com.example.ejemplorv.databinding.ContactosBinding
 
 
 class MainActivity : AppCompatActivity() {
+
+        lateinit var recyclerView: RecyclerView
+        lateinit var adapter: ContactosAdapter
+        lateinit var tasks: MutableList< ContactosEntity>
     @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         val contactos = ContactosBinding.inflate(layoutInflater)
         setContentView(contactos.root)
 
-
+//Lista de contactos
         contactos.vistaContactos.adapter=ContactosAdapter(listOf(
             Contacto("Juan","648362245",  "hombre"),
             Contacto("Jorge","648362245", "hombre"),
@@ -46,5 +50,41 @@ class MainActivity : AppCompatActivity() {
         )
 
 
+    }
+
+    fun getContactos()= runBlocking {
+        launch {                        // Inicio del hilo
+            contactos = MisContactosApp.database.ContactosDao().getAllContactos()    // Se carga la lista de contactos
+            setUpRecyclerView(contactos)        // se pasa la lista a la Vista
+        }
+    }
+
+    fun addContacto(contacto:ContactosEntity)= runBlocking{  // Corrutina que añade un contacto
+        launch {
+            val id = MisContactosApp.database.ContactosDao().addContacto(contacto)   // Inserta un contacto
+            val recoveryContacto = MisContactosApp.database.ContactosDao().getTaskById(id)   // Recarga la lista de contacts
+            contactos.add(recoveryContacto)
+            adapter.notifyItemInserted(contactos.size)  // El adaptador notifica que se ha insertado
+            clearFocus()        // Se elimina el texto del teclado
+            hideKeyboard()      // y se oculta el teclado
+        }
+    }
+
+
+    fun deleteContacto(contacto: ContactosEntity)= runBlocking{
+        launch {
+            val position = contactos.indexOf(contacto)  // Busca la posición del contacto en la lista...
+            MisContactosApp.database.ContactosDao().deleteContacto(contacto) // ... y lo borra de la base de datos.
+            contactos.remove(contacto)      // Finalmente, la elimina el contacto de la lista
+            adapter.notifyItemRemoved(position) // El adaptador notifica que se ha eliminado el contacto
+        }
+    }
+
+    fun setUpRecyclerView(contactos: List< ContactosEntity>) {    // Método que muestra la vista usando el adaptador
+        adapter = ContactosAdapter(contactos, { updateContacto(it) }, {deleteContacto(it)})
+        recyclerView = findViewById(R.id.rvContacto)
+        recyclerView.setHasFixedSize(true)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = adapter
     }
 }
