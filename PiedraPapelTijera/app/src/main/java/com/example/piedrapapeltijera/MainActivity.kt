@@ -31,10 +31,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import com.example.piedrapapeltijera.Home.HomeScreen
 import com.example.piedrapapeltijera.ui.theme.PiedraPapelTijeraTheme
 import kotlin.random.Random
 
@@ -48,7 +44,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val navController = rememberNavController()
+                   /* val navController = rememberNavController()
                     NavHost(navController = navController, startDestination = "Home"){
                         composable(route="Home"){
                             HomeScreen{
@@ -56,8 +52,8 @@ class MainActivity : ComponentActivity() {
                                 navController.navigate("detail")
                         }
                     }
-
-                    //juego()
+*/
+                    juego()
 
                 }
             }
